@@ -1,0 +1,3 @@
+services/airflow/*.err
+services/airflow/*.out
+services/airflow/*.pid
