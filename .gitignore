@@ -1,3 +1,4 @@
 services/airflow/*.err
 services/airflow/*.out
 services/airflow/*.pid
+services/airflow/airflow.db
