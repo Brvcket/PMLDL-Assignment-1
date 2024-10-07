@@ -3,11 +3,8 @@ from airflow.operators.bash import BashOperator
 from datetime import datetime, timedelta
 import os
 
-# PROJECT_DIR = os.getenv('PROJECT_DIR')
 PROJECT_DIR = '/mnt/c/Users/ahmat/PycharmProjects/PMLDL-Assignment-1'
 os.chdir(PROJECT_DIR)
-
-# os.system('pip install pandas')
 
 default_args = {
     'owner': 'airflow',

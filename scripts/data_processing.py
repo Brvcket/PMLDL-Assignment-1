@@ -21,22 +21,3 @@ train, test = train_test_split(df, test_size=0.2, random_state=42)
 
 train.to_csv('data/processed/train.csv', index=False)
 test.to_csv('data/processed/test.csv', index=False)
-
-# columns_to_encode = ['Parental_Involvement', 'Access_to_Resources', 'Extracurricular_Activities', 'Motivation_Level', 'Internet_Access', 'Family_Income', 'Teacher_Quality', 'School_Type', 'Peer_Influence', 'Learning_Disabilities', 'Parental_Education_Level', 'Distance_from_Home', 'Gender']
-# labelencoder = LabelEncoder()
-# for column in columns_to_encode:
-#     df[column] = labelencoder.fit_transform(df[column])
-#
-# scaler = MinMaxScaler()
-#
-# df.fillna(df.median(), inplace=True)
-#
-# X, y = df.drop('Exam_Score', axis=1), df['Exam_Score']
-# X = scaler.fit_transform(X)
-#
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-#
-# X_train.to_csv('data/processed/X_train.csv', index=False)
-# X_test.to_csv('data/processed/X_test.csv', index=False)
-# y_train.to_csv('data/processed/y_train.csv', index=False)
-# y_test.to_csv('data/processed/y_test.csv', index=False)
