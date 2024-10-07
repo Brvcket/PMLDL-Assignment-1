@@ -1,18 +1,12 @@
-import logging
-
 from fastapi import FastAPI
 import joblib
-import numpy as np
 import os
 import mlflow
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, MinMaxScaler
-import sys
 from pydantic import BaseModel
 
-# from scripts.train_model import encode_data, scale_data
-
-PROJECT_DIR = '/mnt/c/Users/ahmat/PycharmProjects/PMLDL-Assignment-1'
+# PROJECT_DIR = '/mnt/c/Users/ahmat/PycharmProjects/PMLDL-Assignment-1'
+PROJECT_DIR = os.getenv('PROJECT_DIR')
 os.chdir(PROJECT_DIR)
 
 model_dir = 'models/linear_regression_model.pkl'

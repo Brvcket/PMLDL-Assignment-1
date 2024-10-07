@@ -1,0 +1,26 @@
+services:
+  api:
+    build:
+#      context: ../..
+      context: ./api
+#      dockerfile: code/deployment/api/Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PROJECT_DIR=/mnt/host_project_dir
+    container_name: api
+    volumes:
+      - /mnt/c/Users/ahmat/PycharmProjects/PMLDL-Assignment-1:/mnt/host_project_dir
+#      - C:\Users\ahmat\PycharmProjects\PMLDL-Assignment-1:/mnt/host_project_dir
+  app:
+    build:
+#      context: ../..
+      context: ./app
+#      dockerfile: code/deployment/app/Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    container_name: app

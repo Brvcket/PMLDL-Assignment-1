@@ -1,11 +1,9 @@
-import pandas as pd
 import streamlit as st
 import requests
-from sklearn.preprocessing import LabelEncoder, MinMaxScaler
-import mlflow
-import os
 
 st.title("Student Performance Predictor")
+
+FASTAPI_URL = "http://api:8000/predict"
 
 hours_studied = st.number_input('Hours Studied', min_value=0, max_value=168)
 attendance = st.number_input('Attendance', min_value=0, max_value=100)
@@ -51,7 +49,5 @@ if st.button('Predict'):
         "Gender": gender,
     }
 
-    print(features)
-
-    response = requests.post("http://0.0.0.0:8000/predict", json=features)
+    response = requests.post(FASTAPI_URL, json=features)
     st.write(f"Predicted Exam Score: {response.json()['prediction']}")
