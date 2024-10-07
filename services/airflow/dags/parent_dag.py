@@ -36,14 +36,11 @@ trigger_model_pipeline = TriggerDagRunOperator(
     dag=dag
 )
 
-# trigger_data_pipeline = DummyOperator(
-#     task_id='trigger_data_engineering_pipeline',
-#     dag=dag,
-# )
-#
-# trigger_model_pipeline = DummyOperator(
-#     task_id='trigger_model_training_pipeline',
-#     dag=dag,
-# )
+trigger_deploy_pipeline = TriggerDagRunOperator(
+    task_id='trigger_deployment_pipeline',
+    trigger_dag_id='deployment_pipeline',
+    wait_for_completion=False,
+    dag=dag
+)
 
-trigger_data_pipeline >> trigger_model_pipeline
+trigger_data_pipeline >> trigger_model_pipeline >> trigger_deploy_pipeline

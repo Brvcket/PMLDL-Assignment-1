@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 import os
 import argparse
 
-PROJECT_DIR = '/mnt/c/Users/ahmat/PycharmProjects/PMLDL-Assignment-1'
+PROJECT_DIR = os.getenv('PROJECT_DIR')
 os.chdir(PROJECT_DIR)
 
 def read_data(file_path):
