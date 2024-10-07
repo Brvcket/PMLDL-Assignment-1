@@ -16,8 +16,13 @@ default_args = {
 start_date = pendulum.now(tz="Europe/Moscow").subtract(minutes=5)
 start_date = start_date.replace(second=0, microsecond=0)
 
-dag = DAG('model_training_pipeline', default_args=default_args, schedule_interval=timedelta(minutes=5),
-          start_date=start_date)
+dag = DAG(
+    'model_training_pipeline',
+    default_args=default_args,
+    schedule_interval=None,
+    start_date=start_date,
+    catchup=False,
+)
 
 task1 = BashOperator(
     task_id='read_data',
