@@ -7,6 +7,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 import os
 import argparse
+import joblib
 
 PROJECT_DIR = '/mnt/c/Users/ahmat/PycharmProjects/PMLDL-Assignment-1'
 os.chdir(PROJECT_DIR)
@@ -16,18 +17,31 @@ def read_data(train_path, test_path):
     test = pd.read_csv(test_path)
     return train, test
 
-def encode_data(df, columns_to_encode):
-    labelencoder = LabelEncoder()
-    for column in columns_to_encode:
-        df[column] = labelencoder.fit_transform(df[column])
+def encode_data(df, columns_to_encode, fit=True):
+    encoders_base_dir = "models/encoder"
+    if fit:
+        for i, column in enumerate(columns_to_encode):
+            labelencoder = LabelEncoder()
+            df[column] = labelencoder.fit_transform(df[column])
+            encoder_dir = f'{encoders_base_dir}{i}.pkl'
+            joblib.dump(labelencoder, encoder_dir)
+    else:
+        for i, column in enumerate(columns_to_encode):
+            labelencoder = joblib.load(f'{encoders_base_dir}{i}.pkl')
+            df[column] = labelencoder.transform(df[column])
     return df
 
 def scale_data(train, test):
+    scaler_dir = "models/scaler.pkl"
+
     scaler = MinMaxScaler()
     X_train, y_train = train.drop('Exam_Score', axis=1), train['Exam_Score']
     X_test, y_test = test.drop('Exam_Score', axis=1), test['Exam_Score']
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
+
+    joblib.dump(scaler, scaler_dir)
+
     return X_train, y_train, X_test, y_test
 
 def fit_model(X_train, y_train):
@@ -64,8 +78,8 @@ def main(step):
         columns_to_encode = ['Parental_Involvement', 'Access_to_Resources', 'Extracurricular_Activities', 'Motivation_Level',
                              'Internet_Access', 'Family_Income', 'Teacher_Quality', 'School_Type', 'Peer_Influence',
                              'Learning_Disabilities', 'Parental_Education_Level', 'Distance_from_Home', 'Gender']
-        train = encode_data(train, columns_to_encode)
-        test = encode_data(test, columns_to_encode)
+        train = encode_data(train, columns_to_encode, fit=True)
+        test = encode_data(test, columns_to_encode, fit=False)
         pd.to_pickle(train, 'data/temp/train_encoded.pkl')
         pd.to_pickle(test, 'data/temp/test_encoded.pkl')
 

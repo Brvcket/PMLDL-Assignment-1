@@ -16,6 +16,7 @@ def process_data(df):
     df['Sleep_Hours'] = df['Sleep_Hours'].clip(0, 24)
     df['Hours_Studied'] = df['Hours_Studied'].clip(0, 168)
     df['Physical_Activity'] = df['Physical_Activity'].clip(0, 168)
+    df['Tutoring_Sessions'] = df['Tutoring_Sessions'].clip(0, 168)
     df.fillna('most_frequent', inplace=True)
     return df
 
